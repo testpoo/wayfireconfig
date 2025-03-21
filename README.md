@@ -1,6 +1,7 @@
 ### 1. 安装wayfire及相关软件
 ```
-sudo apt install wayfire swaybg swayidle swaylock fcitx5 fcitx5-rime rime-data-wubi thunar xarchiver pulseaudio blueman thunar-archive-plugin fonts-noto-cjk foot wofi seatd xwayland git brightnessctl firefox-esr mako-notifier
+# 在wayfire下foot无法输入中文，终端替换成Sakura
+sudo apt install wayfire swaybg swayidle swaylock fcitx5 fcitx5-rime rime-data-wubi thunar xarchiver pulseaudio blueman thunar-archive-plugin fonts-noto-cjk sakura wofi seatd xwayland git brightnessctl firefox-esr mako-notifier gsettings-desktop-schemas
 ```
 
 ### 2. 启动wayfire
@@ -107,4 +108,27 @@ repeatable_binding_light_up = KEY_BRIGHTNESSUP
 command_light_up = brightnessctl set 5%+
 repeatable_binding_light_down = KEY_BRIGHTNESSDOWN
 command_light_down = brightnessctl set 5%-
+```
+
+### 7. 其他
+
+**禁止 `wofi` 多开**
+
+```
+#!/bin/bash
+
+if pgrep -x "wofi" > /dev/null; then
+    echo "Wofi is already running."
+else
+    wofi -S drun -I -G -p "请输入程序名称"
+fi
+```
+**`gtk` 程序添加最大化和最小化按钮**
+
+```
+gsettings-desktop-schemas  # 这装这个软件
+
+gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"  # 添加最大化和最小化按钮
+gsettings set org.gnome.desktop.interface gtk-theme "主题名称"  # 设置主题
+gsettings set org.gnome.desktop.interface icon-theme "图标主题名称"  # 设置图标
 ```
